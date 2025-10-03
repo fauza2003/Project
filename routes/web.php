@@ -10,6 +10,8 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\Auth\PrototypeResetController;
+use App\Http\Controllers\Auth\CustomResetPasswordController;
 // Route untuk halaman utama dengan nama 'home'
 Route::get('home', function () {
     return view('home'); // Mengarah ke resources/views/home.blade.php
@@ -122,4 +124,22 @@ Route::get('/admin/movies/success', function () {
 
 Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users.index');
 
+// Tampilkan form input email (GET) - ini tetap menggunakan controller bawaan
+Route::get('forgot-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+
+// TIMPA/GANTI rute POST yang mengirim email.
+// Sekarang mengarah ke controller kustom kita.
+Route::post('forgot-password', [PrototypeResetController::class, 'sendResetLinkEmail'])->name('password.email');
+
+// Tampilkan form ganti password (GET) - ini tetap menggunakan controller bawaan
+Route::get('reset-password/{token}', [App\Http\Controllers\Auth\ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+
+// Proses ganti password (POST) - ini tetap menggunakan controller bawaan
+Route::post('reset-password', [App\Http\Controllers\Auth\ResetPasswordController::class, 'reset'])->name('password.update');
+
+// Rute GET untuk menampilkan formulir (Tahap 2)
+Route::get('password/reset/{token}', [CustomResetPasswordController::class, 'showResetForm'])->name('password.reset'); 
+
+// Rute POST untuk memproses pembaruan password (Tahap 3)
+Route::post('password/reset', [CustomResetPasswordController::class, 'reset'])->name('password.update');
 

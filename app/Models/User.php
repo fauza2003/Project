@@ -41,8 +41,9 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
+            // Casting 'password' => 'hashed' sudah dihapus. 
+            // Ini benar, karena hashing sekarang dilakukan secara manual di controller.
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
         ];
     }
 }

@@ -34,7 +34,10 @@ class MovieController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'duration' => 'required|integer|min:1', // Sesuai smallint
+            'duration' => 'required|',
+    'string',
+    'min:20',
+    'regex:/[a-zA-Z0-9]/', 
             'genre' => 'required|in:fiksi,nonfiksi,misteri,fantasi,romansa,sains', // Sesuai ENUM
             'release_date' => 'required|date',
             'poster' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Sesuai File Upload
@@ -80,7 +83,10 @@ class MovieController extends Controller
         // 1. Validasi input
         $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'required|string',
+            'description' => 'required',
+        'string',
+        'min:20',
+        'regex:/[a-zA-Z0-9]{3,}/',
             'duration' => 'required|integer|min:1',
             'genre' => 'required|in:fiksi,nonfiksi,misteri,fantasi,romansa,sains', // Sesuai ENUM
             'release_date' => 'required|date',

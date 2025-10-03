@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar - GoCinema</title>
 
-    <!-- Menambahkan link Bootstrap CSS -->
+    <!-- Menambahkan link Bootstrap CSS (untuk spinner dan grid) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Link Tailwind CSS untuk styling modern -->
@@ -58,8 +58,9 @@
                     
                     <h1 class="text-3xl font-extrabold text-primary-dark mb-2 text-center">Buat Akun Baru</h1>
                     <p class="text-gray-600 mb-8 text-center border-b pb-4">Daftar untuk mulai memesan tiket!</p>
-
-                    <form method="POST" action="{{ route('register') }}">
+                    
+                    <!-- Form dengan ID untuk JavaScript Handling -->
+                    <form id="registerForm" method="POST" action="{{ route('register') }}">
                         @csrf
 
                         <!-- Name Input -->
@@ -104,8 +105,8 @@
 
                         <!-- Submit Button -->
                         <div class="mb-4">
-                            <button type="submit" class="btn w-full py-3 font-bold text-white rounded-lg shadow-md transition duration-300 
-                                                         bg-secondary-red hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300">
+                            <button id="registerButton" type="submit" class="btn w-full py-3 font-bold text-white rounded-lg shadow-md transition duration-300 
+                                                                             bg-secondary-red hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300">
                                 {{ __('Daftar') }}
                             </button>
                         </div>
@@ -123,9 +124,26 @@
         </div>
     </div>
 
-    <!-- Tambahkan script Bootstrap JS -->
+    <!-- Tambahkan script Bootstrap JS (untuk spinner) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function() {
+            const button = document.getElementById('registerButton');
+            
+            // 1. Nonaktifkan tombol
+            button.disabled = true;
+            
+            // 2. Ubah tampilan menjadi loading state
+            button.innerHTML = `
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Memproses...
+            `;
+            
+            // Opsi: Tambahkan class untuk tampilan yang lebih gelap saat loading
+            button.classList.add('opacity-75');
+        });
+    </script>
 </body>
 
 </html>
-

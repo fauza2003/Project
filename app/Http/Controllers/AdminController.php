@@ -24,7 +24,9 @@ class AdminController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'required|string',
+            'description' => 'required|string','string',
+        'min:20',
+        'regex:/[a-zA-Z0-9]{3,}/',
             'image_url' => 'required|url',
         ]);
 

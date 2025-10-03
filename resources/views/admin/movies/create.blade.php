@@ -65,10 +65,13 @@
                     <input type="text" name="title" id="title" class="form-control w-full border-gray-300" required>
                 </div>
 
-                <!-- Description Input -->
+                <!-- Deskripsi Input -->
                 <div class="mb-4">
                     <label for="description" class="form-label block text-sm font-semibold text-gray-700 mb-1">Deskripsi:</label>
-                    <textarea name="description" id="description" class="form-control w-full border-gray-300" rows="4" required></textarea>
+                    <textarea name="description" id="description" class="form-control w-full border-gray-300 @error('description') is-invalid @enderror" rows="4" required>{{ old('description') }}</textarea>
+                    @error('description')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <!-- Duration Input -->

@@ -59,8 +59,25 @@
                     <h1 class="text-3xl font-extrabold text-primary-dark mb-2 text-center">Masuk ke Akun Anda</h1>
                     <p class="text-gray-600 mb-8 text-center border-b pb-4">Selamat datang kembali di GoCinema!</p>
 
-                    @if (session('error'))
-                        <div class="alert alert-danger bg-red-100 text-red-700 border-red-500 mb-4" role="alert">
+                    <!-- NOTIFIKASI ERROR TAMPIL DI SINI (Memastikan $errors ada) -->
+                    @if ($errors->any())
+                        @if ($errors->has('email_not_found'))
+                            <div class="alert alert-danger bg-red-100 text-red-700 border-red-500 mb-4 rounded-lg p-3" role="alert">
+                                **{{ __('Email tidak terdaftar.') }}**
+                            </div>
+                        @elseif ($errors->has('password_wrong'))
+                            <div class="alert alert-danger bg-red-100 text-red-700 border-red-500 mb-4 rounded-lg p-3" role="alert">
+                                **{{ __('Password salah.') }}**
+                            </div>
+                        @else
+                            <!-- Tangani error validasi form standar yang tidak spesifik -->
+                            <div class="alert alert-danger bg-red-100 text-red-700 border-red-500 mb-4 rounded-lg p-3" role="alert">
+                                {{ __('Mohon periksa kembali input Anda.') }}
+                            </div>
+                        @endif
+                    @elseif (session('error'))
+                        <!-- Menangani error session umum -->
+                        <div class="alert alert-danger bg-red-100 text-red-700 border-red-500 mb-4 rounded-lg p-3" role="alert">
                             {{ session('error') }}
                         </div>
                     @endif
@@ -98,11 +115,6 @@
                                     {{ __('Ingat Saya') }}
                                 </label>
                             </div>
-                            @if (Route::has('password.request'))
-                                <a class="text-sm text-secondary-red hover:text-red-700 font-semibold transition duration-150" href="{{ route('password.request') }}">
-                                    {{ __('Lupa Kata Sandi?') }}
-                                </a>
-                            @endif
                         </div>
 
                         <!-- Submit Button -->
